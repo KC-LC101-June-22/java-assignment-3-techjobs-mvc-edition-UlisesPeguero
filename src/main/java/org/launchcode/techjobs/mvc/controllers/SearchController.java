@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.launchcode.techjobs.mvc.controllers.ListController.columnChoices;
-import static org.launchcode.techjobs.mvc.controllers.ListController.jobFields;
 
 
 /**
@@ -21,11 +19,10 @@ import static org.launchcode.techjobs.mvc.controllers.ListController.jobFields;
  */
 @Controller
 @RequestMapping("search")
-public class SearchController {
+public class SearchController extends TechJobsController {
 
     @GetMapping(value = "")
     public String search(Model model) {
-        model.addAttribute("columns", columnChoices);
         return "search";
     }
 
@@ -39,12 +36,10 @@ public class SearchController {
         } else {
             jobs = JobData.findByColumnAndValue(searchType, searchTerm);
         }
-        System.out.println(jobFields);
-        model.addAttribute("jobFields", ListController.jobFields);
+
         model.addAttribute("searchType", searchType);
         model.addAttribute("searchTerm", searchTerm);
         model.addAttribute("jobs", jobs);
-        model.addAttribute("columns", columnChoices);
         return "search";
     }
 
