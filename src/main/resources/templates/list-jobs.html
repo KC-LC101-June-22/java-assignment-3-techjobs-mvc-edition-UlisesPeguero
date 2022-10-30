@@ -12,6 +12,16 @@
 
     <!-- TODO #1 - Use a loop to display job results in a table. -->
 
+    <th:block th:fragment="jobs-list" th:each="job: ${jobs}">
+        <table class="centeredTable job-listing">
+            <th:block th:each="field: ${jobFields}">
+                <tr>
+                    <td th:text="${field.value}"></td>
+                    <td th:text="${job[field.key]}"></td>
+                </tr>
+            </th:block>
+        </table>
+    </th:block>
 </div>
 
 </body>

@@ -3,6 +3,8 @@ package org.launchcode.techjobs.mvc.controllers;
 
 import org.launchcode.techjobs.mvc.models.Job;
 import org.launchcode.techjobs.mvc.models.JobData;
+import org.launchcode.techjobs.mvc.models.Location;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by LaunchCode
@@ -21,6 +25,8 @@ public class ListController {
 
     static HashMap<String, String> columnChoices = new HashMap<>();
     static HashMap<String, Object> tableChoices = new HashMap<>();
+    // <field value, List label>
+    static HashMap<String, String> jobFields = new LinkedHashMap<>();
 
     public ListController () {
         columnChoices.put("all", "All");
@@ -33,12 +39,20 @@ public class ListController {
         tableChoices.put("location", JobData.getAllLocations());
         tableChoices.put("positionType", JobData.getAllPositionTypes());
         tableChoices.put("coreCompetency", JobData.getAllCoreCompetency());
+
+        jobFields.put("id", "ID");
+        jobFields.put("name", "Name");
+        jobFields.put("employer", "Employer");
+        jobFields.put("location", "Location");
+        jobFields.put("positionType", "Position Type");
+        jobFields.put("coreCompetency", "Core Competency");
     }
 
     @GetMapping(value = "")
     public String list(Model model) {
         model.addAttribute("columns", columnChoices);
         model.addAttribute("tableChoices", tableChoices);
+
         model.addAttribute("employers", JobData.getAllEmployers());
         model.addAttribute("locations", JobData.getAllLocations());
         model.addAttribute("positions", JobData.getAllPositionTypes());
@@ -57,6 +71,8 @@ public class ListController {
             jobs = JobData.findByColumnAndValue(column, value);
             model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value);
         }
+
+        model.addAttribute("jobFields", jobFields);
         model.addAttribute("jobs", jobs);
 
         return "list-jobs";
