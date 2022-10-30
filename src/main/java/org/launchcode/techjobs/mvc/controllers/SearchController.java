@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.launchcode.techjobs.mvc.controllers.ListController.columnChoices;
+import static org.launchcode.techjobs.mvc.controllers.ListController.jobFields;
 
 
 /**
@@ -38,6 +39,10 @@ public class SearchController {
         } else {
             jobs = JobData.findByColumnAndValue(searchType, searchTerm);
         }
+        System.out.println(jobFields);
+        model.addAttribute("jobFields", ListController.jobFields);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("searchTerm", searchTerm);
         model.addAttribute("jobs", jobs);
         model.addAttribute("columns", columnChoices);
         return "search";
