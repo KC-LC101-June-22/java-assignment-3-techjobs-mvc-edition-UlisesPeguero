@@ -17,8 +17,7 @@
             <th:block th:each="field: ${jobFields}">
                 <tr>
                     <td th:text="${field.value}"></td>
-                    <td th:if="${field.key.equals('id') || field.key.equals('name')}" th:text="${job['__${field.key}__']}"></td>
-                    <td th:unless="${field.key.equals('id') || field.key.equals('name')}"> <a th:href="@{/list/jobs(column=${field.key},value=${job['__${field.key}__']})}" th:text="${job['__${field.key}__']}"></a></td>
+                    <td th:text="${job[field.key]}"></td>
                 </tr>
             </th:block>
         </table>
